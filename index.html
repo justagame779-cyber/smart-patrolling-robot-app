@@ -52,6 +52,8 @@
       margin: 0;
       padding: 0;
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      /* ဖုန်းပေါ်တွင် နှိပ်လိုက်စဉ် အပြာ/အစိမ်းရောင် အကွက်ပေါ်လာခြင်းကို တားဆီးရန် */
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
@@ -263,10 +265,15 @@
       font-weight: 600;
       transition: all 0.25s ease;
       white-space: nowrap;
+      outline: none;
     }
 
     .nav-btn:hover {
       color: var(--text-main);
+    }
+
+    .nav-btn:focus, .nav-btn:active {
+      outline: none;
     }
 
     .nav-btn.active-nav {
@@ -291,6 +298,7 @@
       align-items: center;
       gap: 5px;
       white-space: nowrap;
+      outline: none;
     }
 
     .theme-toggle svg {
@@ -301,6 +309,10 @@
 
     .theme-toggle:hover {
       background: var(--border-color);
+    }
+
+    .theme-toggle:focus, .theme-toggle:active {
+      outline: none;
     }
 
     /* Red/Offline Status Badge */
@@ -454,7 +466,6 @@
       word-wrap: break-word;
     }
     
-    /* GPS Text font size ကြီးစေရန် ပြင်ဆင်ထားသောနေရာ */
     .val.gps-text {
       font-size: clamp(16px, 4.5vw, 20px);
       font-weight: 800;
@@ -516,8 +527,10 @@
       border: none; font-weight: 600; font-size: 12px; cursor: pointer;
       transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
       box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      outline: none;
     }
     .btn:active { transform: scale(0.97); }
+    .btn:focus { outline: none; }
     .btn-primary { background: linear-gradient(135deg, #06b6d4, #3b82f6); color: #fff; }
     .btn-danger { background: linear-gradient(135deg, #f43f5e, #e11d48); color: #fff; }
 
@@ -621,8 +634,10 @@
       background: var(--accent-cyan); color: #ffffff; border: none;
       padding: 9px 18px; border-radius: 10px; font-weight: 700; cursor: pointer;
       width: 100%; transition: transform 0.15s ease, background 0.2s ease;
+      outline: none;
     }
     .modal-close-btn:active { transform: scale(0.97); }
+    .modal-close-btn:focus { outline: none; }
 
     footer { margin-top: auto; padding-top: 20px; font-size: 11px; color: var(--text-muted); text-align: center; }
   </style>
@@ -716,13 +731,13 @@
         </div>
 
         <div class="card">
-          <div class="card-header">Ultrasonic Sensor</div>
+          <div class="card-header">Ultrasonic Sonar</div>
           <div id="ultrasonic" class="val">-- cm</div>
         </div>
 
         <div class="card">
           <div class="card-header">PIR Motion</div>
-          <div id="pir" class="val motion">----</div>
+          <div id="pir" class="val motion">--</div>
         </div>
 
         <div class="card">
