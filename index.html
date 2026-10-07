@@ -55,7 +55,6 @@
       /* ဖုန်းပေါ်တွင် နှိပ်လိုက်စဉ် အပြာ/အစိမ်းရောင် အကွက်ပေါ်လာခြင်းကို တားဆီးရန် */
       -webkit-tap-highlight-color: transparent !important;
       -webkit-touch-callout: none;
-      user-select: none; 
     }
 
     body {
@@ -288,7 +287,6 @@
       box-shadow: 0 0 10px rgba(6, 182, 212, 0.4);
     }
 
-    /* Modern Theme Toggle Button with SVG Icons */
     .theme-toggle {
       background: transparent;
       border: 1px solid var(--border-color);
@@ -322,7 +320,6 @@
       box-shadow: none !important;
     }
 
-    /* Red/Offline Status Badge */
     .status-badge {
       display: flex;
       align-items: center;
@@ -351,7 +348,6 @@
       100% { transform: scale(0.95); opacity: 0.6; }
     }
 
-    /* Special Media Query for Small Screens (350px width support) */
     @media (max-width: 480px) {
       header {
         flex-direction: column;
@@ -569,7 +565,6 @@
       font-size: 12px;
       font-weight: 700;
       letter-spacing: 0.5px;
-      padding: 0px 20px;
     }
 
     .team-title {
@@ -616,7 +611,7 @@
     }
 
 
-    /* Custom Modern Alert Modal */
+    /* Custom Modern Alert Modal (Countdown Supported) */
     .modal-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: var(--modal-overlay); backdrop-filter: blur(4px);
@@ -639,14 +634,20 @@
     }
     .modal-title { font-size: 16px; font-weight: 700; color: var(--text-main); margin-bottom: 6px; }
     .modal-message { color: var(--text-muted); font-size: 12px; line-height: 1.5; margin-bottom: 18px; }
+    
     .modal-close-btn {
       background: var(--accent-cyan); color: #ffffff; border: none;
       padding: 9px 18px; border-radius: 10px; font-weight: 700; cursor: pointer;
-      width: 100%; transition: transform 0.15s ease, background 0.2s ease;
+      width: 100%; transition: transform 0.15s ease, background 0.2s ease, opacity 0.2s ease;
       outline: none !important;
       -webkit-tap-highlight-color: transparent !important;
     }
-    .modal-close-btn:active { transform: scale(0.97); }
+    .modal-close-btn:disabled {
+      background: var(--text-muted) !important;
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    .modal-close-btn:not(:disabled):active { transform: scale(0.97); }
     .modal-close-btn:focus, .modal-close-btn:focus-visible { outline: none !important; box-shadow: none !important; }
 
     footer { margin-top: auto; padding-top: 20px; font-size: 11px; color: var(--text-muted); text-align: center; }
@@ -698,16 +699,13 @@
         <button class="nav-btn" id="btn-team" onclick="switchView('team')">Team</button>
       </div>
       
-      <!-- Modern Theme Toggle with SVG Icon -->
       <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()">
         <span id="themeIcon">
-          <!-- Moon Icon (Default Light Mode shows Moon to switch to Dark) -->
           <svg viewBox="0 0 24 24"><path d="M12.3,2c-0.1,0-0.3,0-0.4,0C6.2,2.3,1.7,7.2,2,13c0.2,5.2,4.4,9.4,9.6,9.6c4.6,0.2,8.6-2.6,10.2-6.5 c0.1-0.3,0-0.7-0.3-0.9c-0.3-0.2-0.7-0.2-0.9,0.1c-1.4,3.2-4.9,5.2-8.5,4.7c-4-0.6-7.1-3.8-7.6-7.8C3.9,8.4,7.4,4.5,12,4.1 c0.3,0,0.6-0.3,0.6-0.6c0-0.3-0.2-0.6-0.5-0.7C12.5,2.1,12.4,2,12.3,2z"/></svg>
         </span> 
         <span id="themeText">Dark</span>
       </button>
       
-      <!-- Red Offline Status Badge -->
       <div class="status-badge"><span class="dot"></span> Offline</div>
     </div>
   </header>
@@ -725,7 +723,7 @@
       <div class="grid">
         <div class="card card-gps">
           <div class="card-header">GPS Location</div>
-          <div class="val gps-text">Technological University Hmawbi</div>
+          <div class="val gps-text">Technological University ( Hmawbi ) </div>
         </div>
 
         <div class="card card-thermal-map">
@@ -761,7 +759,7 @@
         <p style="font-size: 12px; color: var(--text-muted);">Website utilities for web dashboard operations and connection diagnostics.</p>
         <div class="btn-group">
           <button class="btn btn-primary" onclick="triggerManualRefresh()">Force Refresh</button>
-          <button class="btn btn-danger" onclick="showCustomAlert('Web Dashboard is read-only. Use Bluetooth/BLE for direct robot motor overrides.', 'System Locked', '🔒')">Safety Lock Info</button>
+          <button class="btn btn-danger" onclick="triggerManualAlertFlow()">Test Alert Flow</button>
         </div>
       </div>
     </div>
@@ -770,7 +768,6 @@
     <!-- VIEW B: SINGLE PAGE TEAM DETAILS -->
     <div id="team-view" class="view-section">
       <div class="team-card-wrapper">
-        <!-- <div class="team-badge">Developed by fifth year <br> ( second Semester )</div> -->
         <h1 class="team-title">Smart Patrolling Robot</h1>
         
         <p class="team-aim-text">
@@ -808,27 +805,26 @@
 
   </div>
 
-  <footer>&copy; 2026 Smart Patrolling Robot Dashboard</footer>
+  <footer>&copy; 2026 Smart Patrolling Robot Dashboard.</footer>
 
 
   <!-- =========================================================
-      4. CUSTOM ALERT MODAL
+      4. CUSTOM ALERT MODAL (WITH COUNTDOWN SUPPORT)
   ========================================================= -->
   <div class="modal-overlay" id="customModal">
     <div class="modal-box">
-      <div class="modal-icon" id="modalIcon">ℹ️️</div>
+      <div class="modal-icon" id="modalIcon">ℹ</div>
       <div class="modal-title" id="modalTitle">System Information</div>
       <div class="modal-message" id="modalMessage">Message goes here.</div>
-      <button class="modal-close-btn" onclick="closeCustomAlert()">OK</button>
+      <button class="modal-close-btn" id="modalCloseBtn" onclick="closeCustomAlert()" disabled>OK (10s)</button>
     </div>
   </div>
 
 
   <!-- =========================================================
-      5. JAVASCRIPT LOGIC
+      5. JAVASCRIPT LOGIC (SEQUENTIAL 10s COUNTDOWN ALERTS)
   ========================================================= -->
   <script>
-    // Modern Theme Toggle Logic (Supports SVG Icon Switching)
     function toggleTheme() {
       const body = document.body;
       const themeIcon = document.getElementById('themeIcon');
@@ -837,11 +833,9 @@
       body.classList.toggle('light-mode');
       
       if (body.classList.contains('light-mode')) {
-        // Switch to Moon Icon (Dark Mode Option)
         themeIcon.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12.3,2c-0.1,0-0.3,0-0.4,0C6.2,2.3,1.7,7.2,2,13c0.2,5.2,4.4,9.4,9.6,9.6c4.6,0.2,8.6-2.6,10.2-6.5 c0.1-0.3,0-0.7-0.3-0.9c-0.3-0.2-0.7-0.2-0.9,0.1c-1.4,3.2-4.9,5.2-8.5,4.7c-4-0.6-7.1-3.8-7.6-7.8C3.9,8.4,7.4,4.5,12,4.1 c0.3,0,0.6-0.3,0.6-0.6c0-0.3-0.2-0.6-0.5-0.7C12.5,2.1,12.4,2,12.3,2z"/></svg>';
         themeText.textContent = 'Dark';
       } else {
-        // Switch to Sun Icon (Light Mode Option)
         themeIcon.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12,7c-2.8,0-5,2.2-5,5s2.2,5,5,5s5-2.2,5-5S14.8,7,12,7z M2,13h2c0.6,0,1-0.4,1-1s-0.4-1-1-1H2c-0.6,0-1,0.4-1,1 S1.4,13,2,13z M20,13h2c0.6,0,1-0.4,1-1s-0.4-1-1-1h-2c-0.6,0-1,0.4-1,1S19.4,13,20,13z M11,2v2c0,0.6,0.4,1,1,1s1-0.4,1-1V2 c0-0.6-0.4-1-1-1S11,1.4,11,2z M11,20v2c0,0.6,0.4,1,1,1s1-0.4,1-1v-2c0-0.6-0.4-1-1-1S11,19.4,11,20 z M5.9,6.5c-0.4-0.4-1-0.4-1.4,0 c-0.4,0.4-0.4,1,0,1.4l1.4,1.4c0.4,0.4,1,0.4,1.4,0c0.4-0.4,0.4-1,0-1.4L5.9,6.5z M16.9,17.5c-0.4-0.4-1-0.4-1.4,0 c-0.4,0.4-0.4,1,0,1.4l1.4,1.4c0.4,0.4,1,0.4,1.4,0c0.4-0.4,0.4-1,0-1.4L16.9,17.5z M6.5,18.1l1.4-1.4c0.4-0.4,0.4-1,0-1.4 c-0.4-0.4-1-0.4-1.4,0l-1.4,1.4c-0.4,0.4-0.4,1,0,1.4C5.5,18.5,6.1,18.5,6.5,18.1z M17.5,7.1l1.4-1.4c0.4-0.4,0.4-1,0-1.4 c-0.4-0.4-1-0.4-1.4,0l-1.4,1.4c-0.4,0.4-0.4,1,0,1.4C16.5,7.5,17.1,7.5,17.5,7.1z"/></svg>';
         themeText.textContent = 'Light';
       }
@@ -849,19 +843,42 @@
       updateSensors();
     }
 
-    // Custom Alert Modal Functions
+    // Modal Variables for Countdown Logic
     let alertCallback = null;
+    let countdownInterval = null;
 
     function showCustomAlert(message, title = "System Information", iconText = "ℹ️", callback = null) {
       document.getElementById('modalIcon').innerText = iconText;
       document.getElementById('modalTitle').innerText = title;
       document.getElementById('modalMessage').innerText = message;
+      
+      const closeBtn = document.getElementById('modalCloseBtn');
+      closeBtn.disabled = true;
+      
+      let timeLeft = 10;
+      closeBtn.innerText = `OK (${timeLeft}s)`;
+
       document.getElementById('customModal').classList.add('active');
       alertCallback = callback;
+
+      if (countdownInterval) clearInterval(countdownInterval);
+
+      countdownInterval = setInterval(() => {
+        timeLeft--;
+        if (timeLeft > 0) {
+          closeBtn.innerText = `OK (${timeLeft}s)`;
+        } else {
+          clearInterval(countdownInterval);
+          closeBtn.innerText = "OK";
+          closeBtn.disabled = false;
+        }
+      }, 1000);
     }
 
     function closeCustomAlert() {
+      if (countdownInterval) clearInterval(countdownInterval);
       document.getElementById('customModal').classList.remove('active');
+      
       if (alertCallback) {
         alertCallback();
         alertCallback = null;
@@ -884,27 +901,49 @@
       }, durationMs);
     }
 
-    // Page Initial Load Loader Animation & Delayed Alerts
+    // Initial Page Load: 1st Alert -> Wait 10s after OK -> 2nd Alert
     window.addEventListener('DOMContentLoaded', () => {
       triggerLoaderAnimation("SPIDER ROBOT SYSTEM", "Loading Web Dashboard Interface...", 2000, () => {
         
+        // ပထမ Alert Box
         showCustomAlert(
           'This is only a "Demo" single web-page for our project. ESP32 and database connection is under construction. Thank you for visiting our website.',
           'Project Notice',
           '💡',
           () => {
+            // ပထမ Alert ၏ OK ခလုတ်ကို နှိပ်ပြီး ၁၀ စက္ကန့်အကြာတွင် ဒုတိယ Alert ပေါ်လာမည်
             setTimeout(() => {
               showCustomAlert(
                 'The robot is currently offline. ESP32 live telemetry and hardware database features will resume once connected.',
                 'Robot Offline',
-                '⚠️'
+                '⚠️',
+                null
               );
-            }, 10000);
+            }, 10000); // ၁၀ စက္ကန့် (10000 ms) နှောင့်နှေးစေရန်
           }
         );
 
       });
     });
+
+    // Manual test trigger button
+    function triggerManualAlertFlow() {
+      showCustomAlert(
+        'Manual Alert Flow Triggered. Please wait 10 seconds to enable the OK button.',
+        'Manual Test',
+        '⚙️',
+        () => {
+          setTimeout(() => {
+            showCustomAlert(
+              'This is the second manual alert appearing 10 seconds after clicking the first one.',
+              'Second Manual Alert',
+              '🔔',
+              null
+            );
+          }, 10000);
+        }
+      );
+    }
 
     // SPA View Switcher
     function switchView(targetView) {
@@ -939,7 +978,6 @@
     }
     const pixelsDOM = document.querySelectorAll('.pixel');
 
-    // Live Data Polling (Graceful Offline Handling)
     function updateSensors() {
       fetch('/data')
         .then(res => res.json())
@@ -960,9 +998,7 @@
               pixelsDOM[i].style.backgroundColor = `hsl(${hue}, ${saturation}, ${lightness})`;
             }
           }
-        }).catch(e => {
-          // Offline mode fallback
-        });
+        }).catch(e => {});
     }
 
     function triggerManualRefresh() {
