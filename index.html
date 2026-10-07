@@ -29,7 +29,7 @@
       --gps-color: #06b6d4;
     }
 
-    /* Light Mode Variables (Set as Default via body.light-mode) */
+    /* Light Mode Variables */
     body.light-mode {
       --bg-color: #f1f5f9;
       --bg-gradient-center: #ffffff;
@@ -52,7 +52,7 @@
       margin: 0;
       padding: 0;
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      /* ဖုန်းပေါ်တွင် နှိပ်လိုက်စဉ် အပြာ/အစိမ်းရောင် အကွက်ပေါ်လာခြင်းကို တားဆီးရန် */
+      /* Tap Highlight & Touch Callout Removal */
       -webkit-tap-highlight-color: transparent !important;
       -webkit-touch-callout: none;
     }
@@ -70,8 +70,14 @@
       overflow-x: hidden;
     }
 
+    /* Alert ပေါ်ချိန်တွင် Background Scroll မသွားစေရန် Lock ချသည့် Class */
+    body.scroll-locked {
+      overflow: hidden !important;
+      touch-action: none;
+    }
+
     /* =========================================================
-        GLOBAL INITIAL & SWITCHING SPIDER LOADER (HIGH-TECH HUD)
+        GLOBAL INITIAL & SWITCHING SPIDER LOADER
     ========================================================= */
     .loader-screen {
       position: fixed;
@@ -201,9 +207,8 @@
       100% { opacity: 1; text-shadow: 0 0 10px rgba(6, 182, 212, 0.6); }
     }
 
-
     /* =========================================================
-        RESPONSIVE NAVBAR DESIGN (OPTIMIZED FOR 350px+ SCREENS)
+        RESPONSIVE NAVBAR DESIGN
     ========================================================= */
     header {
       width: 100%;
@@ -270,10 +275,7 @@
       -webkit-tap-highlight-color: transparent !important;
     }
 
-    .nav-btn:hover {
-      color: var(--text-main);
-    }
-
+    .nav-btn:hover { color: var(--text-main); }
     .nav-btn:focus, .nav-btn:active, .nav-btn:focus-visible {
       outline: none !important;
       box-shadow: none !important;
@@ -305,16 +307,8 @@
       -webkit-tap-highlight-color: transparent !important;
     }
 
-    .theme-toggle svg {
-      width: 14px;
-      height: 14px;
-      fill: currentColor;
-    }
-
-    .theme-toggle:hover {
-      background: var(--border-color);
-    }
-
+    .theme-toggle svg { width: 14px; height: 14px; fill: currentColor; }
+    .theme-toggle:hover { background: var(--border-color); }
     .theme-toggle:focus, .theme-toggle:active, .theme-toggle:focus-visible {
       outline: none !important;
       box-shadow: none !important;
@@ -356,29 +350,16 @@
         gap: 10px;
         border-radius: 14px;
       }
-      .logo {
-        justify-content: center;
-      }
+      .logo { justify-content: center; }
       .header-controls {
         justify-content: space-between;
         width: 100%;
         gap: 5px;
       }
-      .nav-tabs {
-        flex: 1.2;
-      }
-      .nav-btn {
-        flex: 1;
-        text-align: center;
-        padding: 5px 6px;
-        font-size: 11px;
-      }
-      .theme-toggle, .status-badge {
-        padding: 5px 8px;
-        font-size: 11px;
-      }
+      .nav-tabs { flex: 1.2; }
+      .nav-btn { flex: 1; text-align: center; padding: 5px 6px; font-size: 11px; }
+      .theme-toggle, .status-badge { padding: 5px 8px; font-size: 11px; }
     }
-
 
     /* =========================================================
         MAIN CONTENT CONTAINER & GRID
@@ -480,7 +461,6 @@
 
     .hot { color: var(--accent-red); }
     .motion { color: var(--accent-pink); }
-    .low-batt { color: var(--accent-yellow); }
 
     .thermal-content-wrapper {
       display: flex;
@@ -538,9 +518,8 @@
     .btn-primary { background: linear-gradient(135deg, #06b6d4, #3b82f6); color: #fff; }
     .btn-danger { background: linear-gradient(135deg, #f43f5e, #e11d48); color: #fff; }
 
-
     /* =========================================================
-        TEAM VIEW & PROJECT AIM CARDS DESIGN
+        TEAM VIEW
     ========================================================= */
     .team-card-wrapper {
       background: var(--card-bg);
@@ -610,8 +589,9 @@
       color: var(--text-muted);
     }
 
-
-    /* Custom Modern Alert Modal (Countdown Supported) */
+    /* =========================================================
+        CUSTOM ALERT MODAL WITH COUNTDOWN & SCROLL-LOCK
+    ========================================================= */
     .modal-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: var(--modal-overlay); backdrop-filter: blur(4px);
@@ -642,10 +622,12 @@
       outline: none !important;
       -webkit-tap-highlight-color: transparent !important;
     }
+    /* Disabled State UI for Count Down */
     .modal-close-btn:disabled {
       background: var(--text-muted) !important;
-      opacity: 0.6;
+      opacity: 0.5;
       cursor: not-allowed;
+      transform: none !important;
     }
     .modal-close-btn:not(:disabled):active { transform: scale(0.97); }
     .modal-close-btn:focus, .modal-close-btn:focus-visible { outline: none !important; box-shadow: none !important; }
@@ -656,14 +638,13 @@
 <body class="light-mode">
 
   <!-- =========================================================
-      1. GLOBAL INITIAL / TEAM SWITCHING HUD SPIDER LOADER
+      1. GLOBAL INITIAL SPIDER LOADER
   ========================================================= -->
   <div id="global-loader" class="loader-screen">
     <div class="spider-hud-wrapper">
       <div class="hud-ring"></div>
       <div class="hud-radar-sweep"></div>
       
-      <!-- Modern SVG Cyber Spider Icon -->
       <svg class="spider-svg" viewBox="0 0 100 100">
         <path class="spider-leg-path" d="M 40 45 C 20 30, 10 20, 5 35" />
         <path class="spider-leg-path" d="M 60 45 C 80 30, 90 20, 95 35" />
@@ -685,7 +666,7 @@
 
 
   <!-- =========================================================
-      2. RESPONSIVE HEADER / NAVBAR (350px width optimized)
+      2. RESPONSIVE HEADER / NAVBAR
   ========================================================= -->
   <header>
     <div class="logo">
@@ -723,7 +704,7 @@
       <div class="grid">
         <div class="card card-gps">
           <div class="card-header">GPS Location</div>
-          <div class="val gps-text">Technological University ( Hmawbi ) </div>
+          <div class="val gps-text">Technological University Hmawbi</div>
         </div>
 
         <div class="card card-thermal-map">
@@ -739,13 +720,13 @@
         </div>
 
         <div class="card">
-          <div class="card-header">Ultrasonic Sensor</div>
+          <div class="card-header">Ultrasonic Sonar</div>
           <div id="ultrasonic" class="val">-- cm</div>
         </div>
 
         <div class="card">
           <div class="card-header">PIR Motion</div>
-          <div id="pir" class="val motion">----</div>
+          <div id="pir" class="val motion">--</div>
         </div>
 
         <div class="card">
@@ -759,7 +740,7 @@
         <p style="font-size: 12px; color: var(--text-muted);">Website utilities for web dashboard operations and connection diagnostics.</p>
         <div class="btn-group">
           <button class="btn btn-primary" onclick="triggerManualRefresh()">Force Refresh</button>
-          <button class="btn btn-danger" onclick="triggerManualAlertFlow()">Test Alert Flow</button>
+          <button class="btn btn-danger" onclick="showCustomAlert('Web Dashboard is read-only. Use Bluetooth/BLE for direct robot motor overrides.', 'System Locked', '🔒')">Safety Lock Info</button>
         </div>
       </div>
     </div>
@@ -768,6 +749,7 @@
     <!-- VIEW B: SINGLE PAGE TEAM DETAILS -->
     <div id="team-view" class="view-section">
       <div class="team-card-wrapper">
+        <div class="team-badge">Developed by fifth year ( second Semester )</div>
         <h1 class="team-title">Smart Patrolling Robot</h1>
         
         <p class="team-aim-text">
@@ -805,26 +787,27 @@
 
   </div>
 
-  <footer>&copy; 2026 Smart Patrolling Robot Dashboard.</footer>
+  <footer>&copy; 2026 Smart Patrolling Robot Dashboard</footer>
 
 
   <!-- =========================================================
-      4. CUSTOM ALERT MODAL (WITH COUNTDOWN SUPPORT)
+      4. CUSTOM ALERT MODAL WITH COUNTDOWN & SCROLL LOCK
   ========================================================= -->
   <div class="modal-overlay" id="customModal">
     <div class="modal-box">
       <div class="modal-icon" id="modalIcon">ℹ</div>
       <div class="modal-title" id="modalTitle">System Information</div>
       <div class="modal-message" id="modalMessage">Message goes here.</div>
-      <button class="modal-close-btn" id="modalCloseBtn" onclick="closeCustomAlert()" disabled>OK (10s)</button>
+      <button class="modal-close-btn" id="modalBtn" onclick="closeCustomAlert()">OK (10)</button>
     </div>
   </div>
 
 
   <!-- =========================================================
-      5. JAVASCRIPT LOGIC (SEQUENTIAL 10s COUNTDOWN ALERTS)
+      5. JAVASCRIPT LOGIC
   ========================================================= -->
   <script>
+    // Theme Toggle Logic
     function toggleTheme() {
       const body = document.body;
       const themeIcon = document.getElementById('themeIcon');
@@ -843,45 +826,58 @@
       updateSensors();
     }
 
-    // Modal Variables for Countdown Logic
+    // Custom Alert Logic with Count Down & Scroll Lock
     let alertCallback = null;
     let countdownInterval = null;
 
-    function showCustomAlert(message, title = "System Information", iconText = "ℹ️", callback = null) {
+    function showCustomAlert(message, title = "System Information", iconText = "ℹ️", callback = null, enableCountdown = true) {
       document.getElementById('modalIcon').innerText = iconText;
       document.getElementById('modalTitle').innerText = title;
       document.getElementById('modalMessage').innerText = message;
       
-      const closeBtn = document.getElementById('modalCloseBtn');
-      closeBtn.disabled = true;
+      const modalBtn = document.getElementById('modalBtn');
       
-      let timeLeft = 10;
-      closeBtn.innerText = `OK (${timeLeft}s)`;
+      // Screen Scroll ကို ပိတ်လိုက်ခြင်း
+      document.body.classList.add('scroll-locked');
+
+      if (enableCountdown) {
+        let timeLeft = 10;
+        modalBtn.disabled = true;
+        modalBtn.innerText = `OK (${timeLeft})`;
+
+        if (countdownInterval) clearInterval(countdownInterval);
+
+        countdownInterval = setInterval(() => {
+          timeLeft--;
+          if (timeLeft > 0) {
+            modalBtn.innerText = `OK (${timeLeft})`;
+          } else {
+            clearInterval(countdownInterval);
+            modalBtn.disabled = false;
+            modalBtn.innerText = "OK";
+          }
+        }, 1000);
+      } else {
+        modalBtn.disabled = false;
+        modalBtn.innerText = "OK";
+      }
 
       document.getElementById('customModal').classList.add('active');
       alertCallback = callback;
-
-      if (countdownInterval) clearInterval(countdownInterval);
-
-      countdownInterval = setInterval(() => {
-        timeLeft--;
-        if (timeLeft > 0) {
-          closeBtn.innerText = `OK (${timeLeft}s)`;
-        } else {
-          clearInterval(countdownInterval);
-          closeBtn.innerText = "OK";
-          closeBtn.disabled = false;
-        }
-      }, 1000);
     }
 
     function closeCustomAlert() {
-      if (countdownInterval) clearInterval(countdownInterval);
       document.getElementById('customModal').classList.remove('active');
       
+      // Screen Scroll ကို ပြန်ဖွင့်ပေးခြင်း
+      document.body.classList.remove('scroll-locked');
+      
+      if (countdownInterval) clearInterval(countdownInterval);
+
       if (alertCallback) {
-        alertCallback();
+        let cb = alertCallback;
         alertCallback = null;
+        cb();
       }
     }
 
@@ -901,49 +897,32 @@
       }, durationMs);
     }
 
-    // Initial Page Load: 1st Alert -> Wait 10s after OK -> 2nd Alert
+    // Page Load Sequence with 10s Timer & 10s Sequential Alert Delay
     window.addEventListener('DOMContentLoaded', () => {
       triggerLoaderAnimation("SPIDER ROBOT SYSTEM", "Loading Web Dashboard Interface...", 2000, () => {
         
-        // ပထမ Alert Box
+        // 1st Alert Box with 10s Countdown
         showCustomAlert(
           'This is only a "Demo" single web-page for our project. ESP32 and database connection is under construction. Thank you for visiting our website.',
           'Project Notice',
           '💡',
           () => {
-            // ပထမ Alert ၏ OK ခလုတ်ကို နှိပ်ပြီး ၁၀ စက္ကန့်အကြာတွင် ဒုတိယ Alert ပေါ်လာမည်
+            // 1st Alert ရဲ့ OK ကိုနှိပ်ပြီး ၁၀ စက္ကန့်အကြာမှ 2nd Alert ထွက်မည်
             setTimeout(() => {
               showCustomAlert(
                 'The robot is currently offline. ESP32 live telemetry and hardware database features will resume once connected.',
                 'Robot Offline',
                 '⚠️',
-                null
+                null,
+                true // 2nd Alert မှာလည်း 10s Count Down ပါဝင်မည်
               );
-            }, 10000); // ၁၀ စက္ကန့် (10000 ms) နှောင့်နှေးစေရန်
-          }
+            }, 10000);
+          },
+          true // 1st Alert Countdown Enable
         );
 
       });
     });
-
-    // Manual test trigger button
-    function triggerManualAlertFlow() {
-      showCustomAlert(
-        'Manual Alert Flow Triggered. Please wait 10 seconds to enable the OK button.',
-        'Manual Test',
-        '⚙️',
-        () => {
-          setTimeout(() => {
-            showCustomAlert(
-              'This is the second manual alert appearing 10 seconds after clicking the first one.',
-              'Second Manual Alert',
-              '🔔',
-              null
-            );
-          }, 10000);
-        }
-      );
-    }
 
     // SPA View Switcher
     function switchView(targetView) {
@@ -969,7 +948,7 @@
       }
     }
 
-    // Initialize 64 Thermal Pixels in DOM
+    // Initialize Thermal Grid
     const thermalGrid = document.getElementById('thermal-map');
     for (let i = 0; i < 64; i++) {
       let p = document.createElement('div');
@@ -978,6 +957,7 @@
     }
     const pixelsDOM = document.querySelectorAll('.pixel');
 
+    // Sensor Telemetry Polling
     function updateSensors() {
       fetch('/data')
         .then(res => res.json())
